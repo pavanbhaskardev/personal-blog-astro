@@ -1,0 +1,38 @@
+---
+import Footer from "../components/Footer.astro";
+import { Image } from "astro:assets";
+---
+
+<main>
+  <div class="grid grid-cols-[auto_1fr]">
+    <div class="ml-40 hidden h-32 w-2 border-x border-red-500 lg:block"></div>
+    <div class="flex w-full items-center">
+      <a href="/">
+        <div class="flex w-full items-center gap-2 py-4 pl-8 lg:py-0">
+          <Image
+            width={40}
+            height={40}
+            src={"/logo.svg"}
+            alt={`pavanbhaskar logo`}
+            class="size-10"
+            loading="eager"
+          />
+
+          <p class="text-xl font-semibold">Blog</p>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="h-2 w-full border-y border-red-500"></div>
+
+  <div class="grid grid-cols-[auto_1fr]">
+    <div class="ml-40 hidden h-full w-2 border-x border-red-500 lg:block"></div>
+
+    <div class="h-full min-h-dvh max-w-7xl overflow-x-hidden p-8">
+      <slot />
+
+      <Footer />
+    </div>
+  </div>
+</main>

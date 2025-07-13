@@ -13,7 +13,7 @@ const posts = (await getCollection("blog")).sort(
 
 <Layout>
   <section>
-    <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <ul class="grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
       {
         posts.map((post, index) => {
           const { title, date, imageURL, summary, tags } = post.data;

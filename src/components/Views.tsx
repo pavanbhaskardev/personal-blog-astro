@@ -81,7 +81,10 @@ const Views = ({ slug }: { slug: string }) => {
   }, [data]);
 
   return (
-    <div className="flex items-center gap-1" title={`${data?.count} views`}>
+    <div
+      className="hidden items-center gap-1 md:flex"
+      title={`${data?.count} views`}
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"

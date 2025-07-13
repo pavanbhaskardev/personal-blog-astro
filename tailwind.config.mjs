@@ -19,7 +19,7 @@ export default {
       },
       fontFamily: {
         primary: ["Work Sans", "sans-serif"],
-        secondary: ["Virgil", "sans-serif"], // Virgil font with sans-serif fallback
+        secondary: ["Penpoint", "sans-serif"],
         mono: ["GeistMono"],
       },
     },

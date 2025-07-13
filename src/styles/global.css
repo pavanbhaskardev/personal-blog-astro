@@ -54,6 +54,14 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "Penpoint";
+  font-style: normal;
+  font-weight: normal;
+  src: url(/fonts/Penpoint.otf) format("otf");
+  font-display: swap;
+}
+
 .dot {
   opacity: 0;
   animation: dot-blink 1.4s infinite ease-in-out both;

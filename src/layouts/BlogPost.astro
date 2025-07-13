@@ -19,11 +19,11 @@ const extension = path.extname(imageURL);
 ---
 
 <article
-  class="prose prose-lg prose-orange mx-auto w-full lg:prose-xl marker:text-primary prose-headings:font-secondary prose-headings:font-normal prose-a:text-primary prose-a:after:content-['↗'] prose-blockquote:border-primary prose-blockquote:bg-primary/10 prose-blockquote:py-1 prose-blockquote:backdrop-blur-sm prose-img:aspect-video prose-img:w-full prose-img:rounded-md prose-img:bg-gray-500 prose-img:object-cover"
+  class="prose prose-orange w-full lg:prose-xl marker:text-primary prose-headings:font-secondary prose-headings:font-normal prose-a:text-primary prose-a:after:content-['↗'] prose-blockquote:border-primary prose-blockquote:bg-primary/10 prose-blockquote:py-1 prose-blockquote:backdrop-blur-sm prose-img:aspect-video prose-img:w-full prose-img:rounded-md prose-img:bg-gray-500 prose-img:object-cover"
 >
   <a
     href="/"
-    class="not-prose flex items-center gap-1 text-sm text-text after:!content-none"
+    class="not-prose mb-4 flex items-center gap-1 text-sm text-text after:!content-none"
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -41,6 +41,8 @@ const extension = path.extname(imageURL);
 
     Back</a
   >
+
+  <h1>{title}</h1>
 
   {
     extension.includes("webm") ? (
@@ -66,8 +68,6 @@ const extension = path.extname(imageURL);
       />
     )
   }
-
-  <h1>{title}</h1>
 
   <div class="mb-4 flex items-center justify-between text-gray-500">
     <time class="shrink-0">
