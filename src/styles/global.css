@@ -58,7 +58,7 @@
   font-family: "Penpoint";
   font-style: normal;
   font-weight: normal;
-  src: url(/fonts/Penpoint.otf) format("otf");
+  src: url(/fonts/Penpoint.otf) format("opentype");
   font-display: swap;
 }
 
