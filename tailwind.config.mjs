@@ -20,7 +20,7 @@ export default {
       fontFamily: {
         primary: ["Work Sans", "sans-serif"],
         secondary: ["Penpoint", "sans-serif"],
-        mono: ["GeistMono"],
+        mono: ["JetBrains Mono"],
       },
     },
   },

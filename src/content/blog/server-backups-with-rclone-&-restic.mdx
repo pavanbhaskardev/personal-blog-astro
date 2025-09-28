@@ -1,0 +1,130 @@
+---
+title: Server backups with RClone & Restic
+date: 2025-10-28
+summary: Tools to backup server data to external storage
+imageURL: /blog/server-backups-with-rclone-&-restic/cover-pic.webp
+tags:
+  - Backups
+---
+
+import H2 from "../../components/MDXComponents/H2";
+
+Hi there👋, When self-hosting or deploying applications on a server, **external backups are a must**. They protect you from data loss and make it easy to restore everything on a new server.
+
+In this post, I’ll walk you through two CLI tools you can use to backup server data to S3-compatible storage: **RClone** and **Restic**.
+
+<H2>RClone</H2>
+
+- [RClone](https://rclone.org/) is a command-line tool, often seen as an alternative to `aws-cli`.
+- It supports almost every object storage provider — AWS S3, Cloudflare R2, MinIO, Cloudinary, and more.
+
+```bash
+# Install rclone
+sudo -v ; curl https://rclone.org/install.sh | sudo bash
+```
+
+- Create a configuration, which will be used to backup files
+
+```bash
+rclone config
+
+# Press n to create a new configuration
+2025/09/28 10:54:58 NOTICE: Config file "/home/linux/.config/rclone/rclone.conf" not found - using defaults
+No remotes found, make a new one?
+n) New remote
+s) Set configuration password
+q) Quit config
+n/s/q> n
+
+# Give your configuration a name
+# Next you'll prompted credentials and other options
+Enter name for new remote.
+name> cloudflare
+```
+
+- Now let's upload a file using rclone
+
+```bash
+# rclone copy {remoteName}:{filePath} {backupPath}
+rclone copy cloudflare:data.tar.gz ./
+```
+
+- Now let's create a cron job to execute rclone periodically
+
+```bash
+# Create a script
+nano rclone.sh
+
+# Add these contents to rclone.sh
+rclone copy cloudflare:data.tar.gz ./
+
+# Give it executable permission
+chmod +x rclone.sh
+
+# Open crontab
+crontab -e
+
+# Add this line at the end (runs every minute for demo)
+* * * * * sh /rclone.sh
+```
+
+<H2>Restic</H2>
+
+- [Restic](https://restic.net/) takes a different approach to backups.
+- The first backup creates a snapshot of your data.
+- Future backups only upload changes (like Git diffs).
+- This is very efficient for folder-based backups.
+
+> ⚠️ Restic encrypts all backups with a password. If you lose it, your data is gone.
+
+```bash
+# Install restic
+sudo apt-get install restic
+```
+
+- Restic repositories follow a specific structure inside your storage bucket:
+
+```
+my_s3_bucket
+|
+|-📁 data       (encrypted file contents / data blobs)
+|-📁 index      (maps data blobs to repository)
+|-📁 snapshots  (JSON metadata for each backup)
+|-📁 keys       (encrypted repository keys)
+|-📄 config
+```
+
+- Initialize a repository in S3
+
+```bash
+# Set S3 credentials
+export AWS_ACCESS_KEY_ID=<MY_ACCESS_KEY>
+export AWS_SECRET_ACCESS_KEY=<MY_SECRET_ACCESS_KEY>
+
+# Create a new restic repo
+restic -r s3:s3.us-east-1.amazonaws.com/database init
+```
+
+- Lets create a backup, It'll create a snapshot which can use to restore later
+
+```bash
+restic -r s3:s3.us-east-1.amazonaws.com/database backup ~/work
+
+# Example output
+Files:        5307 new
+Dirs:         1867 new
+Added:        1.200 GiB (1.103 GiB stored)
+
+snapshot 40dc1520 saved
+```
+
+- Restore a snapshot:
+
+```bash
+# restic -r s3:{s3_URL}/{s3_bucketName} restore ${snapshotID} --target ${destinationPath}
+restic -r s3:s3.us-east-1.amazonaws.com/database restore 40dc1520 --target /tmp/restore-work
+```
+
+Both **RClone** and **Restic** are powerful, flexible tools for server backups. Use RClone for simple copy-based backups, and Restic when you want incremental, deduplicated, and encrypted backups.
+
+That’s it for this post, thanks for reading. Stay tuned, and peace ✌️!

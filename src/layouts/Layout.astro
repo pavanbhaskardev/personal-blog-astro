@@ -1,16 +1,17 @@
 ---
-import { ViewTransitions } from "astro:transitions";
+import { ClientRouter } from "astro:transitions";
 import { AstroFont } from "astro-font";
 import "../styles/global.css";
 import { SITE } from "../consts";
 import NotebookLayout from "./NotebookLayout.astro";
-
+import path from "path";
 export interface Props {
   title?: string;
   author?: string;
   profile?: string;
   description?: string;
   ogImage?: string;
+  postImageURL?: string;
   canonicalURL?: string;
   pubDatetime?: Date;
   modDatetime?: Date | null;
@@ -25,9 +26,20 @@ const {
   title: defaultTitle,
 } = SITE;
 
-const { title = defaultTitle, description = defaultDescription } = Astro.props;
+const {
+  title = defaultTitle,
+  description = defaultDescription,
+  postImageURL,
+} = Astro.props;
 
-const ogImageBasedOnPath = pathname === "/" ? ogImage : `${pathname}og.png`;
+const extension = path.extname(postImageURL ?? "");
+
+const ogImageBasedOnPath =
+  pathname === "/"
+    ? ogImage
+    : extension.includes("webm")
+      ? `${pathname}og.png`
+      : postImageURL;
 ---
 
 <!doctype html>
@@ -44,6 +56,16 @@ const ogImageBasedOnPath = pathname === "/" ? ogImage : `${pathname}og.png`;
           display: "swap",
           selector: "body",
           fallback: "sans-serif",
+        },
+        {
+          name: "JetBrains Mono",
+          src: [],
+          preload: true,
+          googleFontsURL:
+            "https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap",
+          display: "swap",
+          selector: "body",
+          fallback: "monospace",
         },
       ]}
     />
@@ -80,7 +102,7 @@ const ogImageBasedOnPath = pathname === "/" ? ogImage : `${pathname}og.png`;
     <meta name="twitter:image:width" content="800" />
     <meta name="twitter:image:height" content="600" />
 
-    <ViewTransitions />
+    <ClientRouter />
   </head>
 
   <body

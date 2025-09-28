@@ -8,7 +8,7 @@ import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 import { transformerNotationHighlight } from "@shikijs/transformers";
 
-import vercel from "@astrojs/vercel/serverless";
+import vercel from "@astrojs/vercel";
 
 // https://astro.build/config
 export default defineConfig({
@@ -31,6 +31,10 @@ export default defineConfig({
     },
   },
 
-  output: "hybrid",
+  output: "server",
   adapter: vercel(),
+
+  server: {
+    allowedHosts: ["terrible-husky-72.telebit.io"],
+  },
 });
