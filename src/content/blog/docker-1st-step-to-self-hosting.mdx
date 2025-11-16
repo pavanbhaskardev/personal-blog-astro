@@ -1,0 +1,202 @@
+---
+title: Docker your 1st step to self-hosting
+date: 2025-11-16
+summary: Start your self-hosting journey with Docker. Learn the basics of Docker and how it can help you run software on your own machine.
+imageURL: /blog/docker-1st-step-to-self-hosting/cover-pic.jpg
+tags:
+  - Docker
+  - Self-Hosting
+---
+
+import Message from "../../components/Message";
+import H2 from "../../components/MDXComponents/H2";
+
+<Message>
+  Hi guys👋, It's been a while from my last blog. In this blog let's see what is
+  Docker and how it can help you in your Self-Hosting journey.
+</Message>
+
+<Message character="chimtu" direction="right">
+  What is Self-Hosting anyway?
+</Message>
+
+<Message>
+  <H2>Self Hosting</H2>
+
+Self-Hosting means running software on your own computer,
+rather than relying on third-party providers.
+This gives you more control over your data, privacy, and customization options.
+
+</Message>
+
+<Message character="chimtu" direction="right">
+  Acha, got it. So how Docker helps in Self-Hosting?
+</Message>
+
+<Message>
+  <H2>Docker</H2>
+
+Docker is a visualization tool, that allows you to package all dependencies that are required to run a software.
+
+Now you can run this package on any system that has Docker installed, without worrying about compatibility issues.
+
+Running your software in Docker is a 3 step process:
+
+1. **Dockerfile**: Configuration file contains what dependencies are required to run the software.
+2. **Image**: It is package created using Dockerfile. It contains all the dependencies required to run the software.
+3. **Container**: It is a running instance of your software.
+
+</Message>
+
+<Message character="chimtu" direction="right">
+  Ha, just create my software as package and run it anywhere. Sounds
+  interesting!
+</Message>
+
+<Message>
+ <H2>Example</H2>
+
+- Assume you've a html portfolio page.
+- We'll host this page using Docker on your laptop.
+- We'll make it accessible over internet.
+
+```bash
+# Assume this is your project structure
+|-- portfolio
+    |-- index.html
+    |-- Dockerfile
+```
+
+- Install Docker in your system from [here](https://docs.docker.com/get-docker/)
+- Open Docker Desktop application and make sure it's running.
+- Let's edit `Dockerfile`.
+
+```bash
+# You can find more details about Dockerfile commands here👇
+# https://docs.docker.com/engine/reference/builder/
+
+# FROM command specifies the base image
+# Using official nginx image as base image to serve our html page
+FROM nginx:stable-alpine
+
+# RUN command executes command
+# Remove default nginx website html files
+RUN rm -rf /usr/share/nginx/html/*
+
+# COPY command copies files from host to Docker image
+# Copy your website files to nginx html directory
+COPY ./index.html /usr/share/nginx/html
+
+# EXPOSE command exposes port to host machine
+# Expose port 80 We can access our website on http://localhost:8080
+EXPOSE 80
+
+# CMD command specifies the command to run when container starts
+# Start nginx server and running in foreground
+CMD ["nginx", "-g", "daemon off;"]
+```
+
+- Now let's create Docker image (package of our software) using this Dockerfile
+
+```bash
+# Here my-portfolio is the name of the image
+# Run this command in terminal from portfolio directory
+docker build -t my-portfolio .
+
+# After successful build, you can see the image in your local docker images
+docker images
+```
+
+- Now let's run this image in a container (running instance of our software)
+
+```bash
+# Here my-portfolio is the name of the image we created earlier
+# -d flag runs the container in detached mode (in background)
+# -p flag maps port 80 of container to port 8080 of host machine
+docker run -d -p 8080:80 my-portfolio
+```
+
+- Now open your browser and visit `http://localhost:8080`, you can see your portfolio page is up and running 🎉
+- Now to make it accessible over internet, you can use tools like [ngrok](https://ngrok.com/) to expose your localhost to internet.
+- Install ngrok from [here](https://ngrok.com/download)
+
+```bash
+# Expose your localhost:8080 to internet
+ngrok http 8080
+```
+
+- Now you can share the generated ngrok URL with your friends to access your portfolio page over internet.
+
+</Message>
+
+<Message character="chimtu" direction="right">
+  It'll take some time to digest, i got basic understanding of Docker now. How
+  it's related to Self-Hosting?
+</Message>
+
+<Message>
+  All companies and individuals who build Open Source software mostly have a
+  Docker image of their software. 
+  
+  Those images can be found on [Docker Hub](https://hub.docker.com/). You can try out their software on your own
+  machine using Docker.
+
+**Example:**
+
+- Let's self-host MongoDB database on your machine using Docker.
+
+```bash
+# Pull MongoDB image from Docker Hub
+docker pull mongo
+
+# Run MongoDB
+docker run -d -p 27017:27017 --name my-mongo mongo
+```
+
+</Message>
+
+<Message character="chimtu" direction="right">
+  Haaa! it's simple just `docker pull` and `docker run` commands. I can try most
+  stuff out there!
+</Message>
+
+<Message>
+  I just showed you tip of the iceberg. There are lot more things to explore in
+  Docker. If you got basic understanding on these concepts, you can self-host mostly any software out there.
+
+1. Docker Compose
+2. Docker Volumes
+3. Docker Networks
+4. Docker Secrets
+5. Docker Configs
+
+</Message>
+
+<Message character="chimtu" direction="right">
+  There's lot to learn.
+</Message>
+
+<Message>
+Yess, at start i too felt same in beginning, Docker provides other advantages:
+
+- Application Isolation [read more](https://dflow.sh/blog/stop-using-pm2-in-production-why-your-nodejs-app-deserves-better)
+- Scalability
+
+</Message>
+
+<Message character="chimtu" direction="right">
+  Can share me resources from where you learned Docker?
+</Message>
+
+<Message>
+
+Sure! Here are some resources to learn Docker:
+
+- [JS Mastery](https://youtu.be/GFgJkfScVNU)
+- [Jims Garage](https://www.youtube.com/@Jims-Garage/videos)
+
+</Message>
+
+<Message character="chimtu" direction="right">
+  Time to start Self-Hosting, that's it for today folks✌️, see you in next blog!
+</Message>

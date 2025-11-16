@@ -4,9 +4,10 @@ import { Image } from "astro:assets";
 ---
 
 <main>
-  <div class="grid grid-cols-[auto_1fr]">
+  <div class="grid lg:grid-cols-[auto_1fr]">
     <div class="ml-40 hidden h-32 w-2 border-x border-red-500 lg:block"></div>
-    <div class="flex w-full items-center">
+
+    <div class="flex w-full flex-grow items-center justify-between pr-8">
       <a href="/">
         <div class="flex w-full items-center gap-2 py-4 pl-8 lg:py-0">
           <Image
@@ -21,6 +22,8 @@ import { Image } from "astro:assets";
           <p class="text-xl font-semibold">Blog</p>
         </div>
       </a>
+
+      <a href="/about" class="text-primary">About</a>
     </div>
   </div>
 
