@@ -6,8 +6,16 @@ function generateId(text: string) {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)+/g, "");
 }
-const H2 = ({ children }: { children: React.ReactNode }) => {
+
+const Heading = ({
+  children,
+  as = "h3",
+}: {
+  children: React.ReactNode;
+  as?: "h1" | "h2" | "h3" | "h4" | "h5";
+}) => {
   let textContent = "";
+  const Element = as;
 
   // If children is a React element, extract the text from its props
   if (React.isValidElement(children)) {
@@ -20,7 +28,7 @@ const H2 = ({ children }: { children: React.ReactNode }) => {
   const id = generateId(textContent);
 
   return (
-    <h2 id={id} className="group hover:!text-text/80">
+    <Element id={id} className="group hover:!text-text/80">
       <a href={`#${id}`} className="not-prose flex items-center gap-2">
         {children}
 
@@ -39,8 +47,8 @@ const H2 = ({ children }: { children: React.ReactNode }) => {
           ></path>
         </svg>
       </a>
-    </h2>
+    </Element>
   );
 };
 
-export default H2;
+export default Heading;
