@@ -5,9 +5,9 @@ import fs from "fs";
 
 export default async (post: CollectionEntry<"blog">) => {
   // Read the fonts from the local filesystem instead of fetching
-  const virgilFontPath = path.resolve("./public/fonts/Virgil.ttf");
+  const penpointFontPath = path.resolve("./public/fonts/Penpoint.otf");
 
-  const virgilFontBuffer = fs.readFileSync(virgilFontPath);
+  const penpointFontBuffer = fs.readFileSync(penpointFontPath);
 
   const svg = await satori(
     <div
@@ -103,8 +103,8 @@ export default async (post: CollectionEntry<"blog">) => {
       embedFont: true,
       fonts: [
         {
-          name: "Virgil",
-          data: virgilFontBuffer,
+          name: "Penpoint",
+          data: penpointFontBuffer,
           style: "normal",
         },
       ],
