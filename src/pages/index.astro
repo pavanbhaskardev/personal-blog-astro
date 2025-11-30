@@ -13,17 +13,18 @@ const posts = (await getCollection("blog")).sort(
 
 <Layout>
   <section>
-    <ul class="grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+    <ul class="grid max-w-5xl gap-x-10 gap-y-12 sm:grid-cols-2">
       {
         posts.map((post, index) => {
           const { title, date, imageURL, summary, tags } = post.data;
           const extension = path.extname(imageURL);
+          const isFirst = index === 0;
 
           return (
-            <li>
+            <li class={isFirst ? "lg:col-span-2" : ""}>
               <a
                 href={`/${post.slug}/`}
-                class="relative inline-block aspect-video w-full overflow-hidden rounded-md"
+                class={`relative inline-block aspect-video w-full overflow-hidden rounded-md`}
               >
                 {extension.includes("webm") ? (
                   <video
@@ -58,12 +59,14 @@ const posts = (await getCollection("blog")).sort(
               </div>
 
               <a href={`/${post.slug}/`}>
-                <h4 class="font-secondary text-2xl transition-colors hover:text-primary">
+                <h4
+                  class={`font-secondary text-2xl transition-colors hover:text-primary ${isFirst ? "lg:text-4xl" : "lg:text-3xl"}`}
+                >
                   {title}
                 </h4>
               </a>
 
-              <p class="text-gray-500">{summary}</p>
+              <p class="text-gray-500 lg:text-lg">{summary}</p>
             </li>
           );
         })

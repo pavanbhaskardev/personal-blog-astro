@@ -39,14 +39,6 @@
 }
 
 @font-face {
-  font-family: "Virgil";
-  font-style: normal;
-  font-weight: normal;
-  src: url(/fonts/Virgil.ttf) format("truetype");
-  font-display: swap;
-}
-
-@font-face {
   font-family: "GeistMono";
   font-style: normal;
   font-weight: 400;
