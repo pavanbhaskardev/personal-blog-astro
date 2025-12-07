@@ -1,0 +1,86 @@
+---
+title: SSH usage simplified
+date: 2025-12-07
+summary: A tool for simplifying SSH usage.
+imageURL: /blog/ssh-usage-simplified/cover-pic.jpg
+tags:
+  - Remote Access
+---
+
+import Message from "../../components/Message";
+import Heading from "../../components/MDXComponents/Heading";
+
+<Message>
+  Hi guys👋. If you've worked with servers you might already used SSH. In this
+  blog I'll share a tool which simplifies your SSH usage.
+</Message>
+
+<Message character="chimtu" direction="right">
+<Heading>SSH</Heading>
+  - For those who don't know, SSH (Secure Shell) is a protocol.
+  - It is used to securely connect to remote server or device over a network and access
+  resources, execute commands on them.
+
+</Message>
+
+<Message>
+  <Heading>VSCode</Heading>
+  What if i told you that you can use VSCode as SSH client?
+  - Yes, you can use VSCode as SSH client.
+  - You can edit files, run commands, and manage your server directly from VSCode.
+
+<Heading as="h4">Installation</Heading>
+
+- Install [Remote - SSH](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh) Extension from VSCode Marketplace.
+  ![Remote-SSH VSCode
+Plugin](/public/blog/ssh-usage-simplified/remote-ssh-vs-code-plugin.avif)
+
+- After installation, click on the icon bottom-left corner.
+  ![Remote-SSH option](/public/blog/ssh-usage-simplified/remote-ssh-select-option.webp)
+
+- Click `Connect to Host` option, select `Configure SSH Hosts` and select your SSH config file ex: /Users/john-deo/.ssh/config
+  ![Configure SSH Hosts](/public/blog/ssh-usage-simplified/remote-ssh-configuration.avif)
+- Add your server connection details in the config file in this format:
+
+```plaintext
+Host server-name
+    HostName 145.85.249.68
+    User root
+```
+
+- Now again click on the icon bottom-left corner.
+  - Select `Connect to Host` and select your server.
+- VSCode now opens a new window and connects to your server.
+- If password is enabled, it will prompt you to enter the password. If you use SSH key authentication, it'll connect directly using that key.
+- Once connected, you can do all operations directly from VSCode.
+
+> In background VSCode runs a nodejs server on the remote machine to facilitate this connection.
+
+</Message>
+
+<Message character="chimtu" direction="right">
+  A GUI can be really helpful it'll save lot of time.
+  - No need for `cd`, `ls`, `cat` commands anymore.
+
+</Message>
+
+<Message>
+  Another advantage is you get split terminal with SSH session.
+
+<video
+  src="/public/blog/ssh-usage-simplified/split-terminal.webm"
+  autoplay
+  loop
+  muted
+  class="aspect-video w-full rounded-md object-cover"
+></video>
+
+- You can run multiple commands in parallel.
+- Here's a youtube tutorial on how to use Remote-SSH extension: [YouTube Tutorial](https://youtu.be/cOopQQIL8JU?si=QFHQnw6p6epCMZvE)
+
+</Message>
+
+<Message character="chimtu" direction="right">
+  Wow! haven't expected that. That's it for today guys, see you in next blog✌️.
+
+</Message>

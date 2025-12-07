@@ -21,7 +21,7 @@ const posts = (await getCollection("blog")).sort(
           const isFirst = index === 0;
 
           return (
-            <li class={isFirst ? "lg:col-span-2" : ""}>
+            <li>
               <a
                 href={`/${post.slug}/`}
                 class={`relative inline-block aspect-video w-full overflow-hidden rounded-md`}
