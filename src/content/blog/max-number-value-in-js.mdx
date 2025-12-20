@@ -1,0 +1,72 @@
+---
+title: Max number value in JS
+date: 2025-12-20
+summary: A issue which i got into when using javascript numbers
+imageURL: /blog/max-number-value-in-js/cover-pic.webp
+tags:
+  - Javascript
+---
+
+import Heading from "../../components/MDXComponents/Heading";
+
+Hi guys👋. Recently I've worked on a backend project, where we need to store a
+number in database which is 19 digit length & unique across records.
+
+I've written API's, tested by entering a initial record everything is working perfect. While doing entry into database we're following a number series.
+
+```text
+8991754057201174837
+8991754057201174838
+8991754057201174839
+8991754057201174840
+```
+
+<Heading>Problem</Heading>
+
+First entry worked fine, but from second entry onwards we're getting `unique field constraint error`. We're sending unique value in API but still getting an error
+
+I've checked the database entries, the last four digits got rounded 😵‍💫
+
+<table>
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Serial No</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>8991754057201170000</td>
+    </tr>
+  </tbody>
+</table>
+
+- I'm sending proper payload to API, but still the number is rounded.
+- Did a quick search found the max safe integer is `9007199254740991`. Which is 16 digit length
+- Number greater than 16 digit it'll get rounded.
+
+```
+8991754057201174838 -> 8991754057201170000
+```
+
+<Heading>Solution</Heading>
+
+- We can use bigger number using `BigInt` in JS.
+- But BigInt can't be serialized error will'be thrown.
+
+```js
+// Uncaught TypeError: Do not know how to serialize a BigInt
+JSON.stringify({ serial_no: BigInt(number) });
+```
+
+- Final retreat was fallback to string field.
+
+```
+backend (accepts string "8991754057201174838" ) -> postgres database (converts to 8991754057201174838)
+```
+
+- Luckily we've used [hasura](https://hasura.io) which expose GraphQL API's on postgres database, it took care of `casting (string -> number conversion)` at database level.
+- Most of other languages has support for 20+ digit integers.
+
+That’s it for this blog, hope this might help you in those scenario's. Until next blog peace✌️
