@@ -73,24 +73,4 @@ const posts = (await getCollection("blog")).sort(
       }
     </ul>
   </section>
-
-  <!-- Privacy-friendly analytics by Plausible -->
-  <script
-    is:inline
-    async
-    src="https://plausible-analytics.up.dflow.sh/js/pa-697BvGc_nPilDbVLvfmin.js"
-  ></script>
-  <script is:inline>
-    (window.plausible =
-      window.plausible ||
-      function () {
-        (plausible.q = plausible.q || []).push(arguments);
-      }),
-      (plausible.init =
-        plausible.init ||
-        function (i) {
-          plausible.o = i || {};
-        });
-    plausible.init();
-  </script>
 </Layout>
